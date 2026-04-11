@@ -22,12 +22,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         //возвращение назад на регистрацию
         binding.tvGoToRegistration.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
         binding.tvGoToReset.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_passwordRecoveryFragment)
         }
+
     }
 
     override fun onDestroyView() {

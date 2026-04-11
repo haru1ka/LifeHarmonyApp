@@ -41,6 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <EditText
+            android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/shape_rounded_edit_text"
@@ -52,6 +53,7 @@
             android:fontFamily="@font/zen_old_mincho_regular"/>
 
         <EditText
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
@@ -72,6 +74,7 @@
             app:passwordToggleTint="@color/dark_brown">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:inputType="textPassword"
@@ -95,6 +98,7 @@
             app:passwordToggleTint="@color/dark_brown">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:inputType="textPassword"
@@ -132,18 +136,20 @@
             android:fontFamily="@font/carlito_regular"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
+            android:id="@+id/btnNext"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="далее"
             android:textAllCaps="true"
             android:textSize="15sp"
             android:textColor="@color/white"
-            android:background="@drawable/shape_button_auth"
+            android:background="@drawable/selector_btn_auth"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
             android:layout_marginTop="30dp"
-            android:fontFamily="@font/zen_old_mincho_semi_bold"/>
+            android:fontFamily="@font/zen_old_mincho_semi_bold"
+            android:enabled="false"
+            />
 
         <TextView
             android:id="@+id/tv_already_have_account"
@@ -154,7 +160,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button"
+            app:layout_constraintTop_toBottomOf="@+id/btnNext"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/carlito_regular"/>
 
