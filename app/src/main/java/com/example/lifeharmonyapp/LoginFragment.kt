@@ -17,7 +17,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         // Кнопка войти
         binding.button.setOnClickListener {
-            // Логика авторизации
+            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
         }
 
         //возвращение назад на регистрацию

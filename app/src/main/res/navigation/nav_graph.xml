@@ -41,6 +41,9 @@
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
@@ -81,6 +84,12 @@
             android:id="@+id/action_newPasswordFragment_to_passwordUpdatedFragment"
             app:destination="@id/passwordUpdatedFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.lifeharmonyapp.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home"/>
 
 
 </navigation>
