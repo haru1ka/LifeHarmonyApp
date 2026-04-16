@@ -34,7 +34,36 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
 
+        // Для сетки по клику СДЕЛАТЬ ЦИКЛ!!!!!
         binding.cell13.setOnClickListener {
+            val bottomSheet = BottomSheetAddWish()
+            bottomSheet.show(parentFragmentManager, "BottomSheetAddWish")
+        }
+        binding.cell11.root.setOnClickListener {
+            val bottomSheet = BottomSheetAddWish()
+            bottomSheet.show(parentFragmentManager, "BottomSheetAddWish")
+        }
+        binding.cell12.root.setOnClickListener {
+            val bottomSheet = BottomSheetAddWish()
+            bottomSheet.show(parentFragmentManager, "BottomSheetAddWish")
+        }
+        binding.cell21.root.setOnClickListener {
+            val bottomSheet = BottomSheetAddWish()
+            bottomSheet.show(parentFragmentManager, "BottomSheetAddWish")
+        }
+        binding.cell23.root.setOnClickListener {
+            val bottomSheet = BottomSheetAddWish()
+            bottomSheet.show(parentFragmentManager, "BottomSheetAddWish")
+        }
+        binding.cell31.root.setOnClickListener {
+            val bottomSheet = BottomSheetAddWish()
+            bottomSheet.show(parentFragmentManager, "BottomSheetAddWish")
+        }
+        binding.cell32.root.setOnClickListener {
+            val bottomSheet = BottomSheetAddWish()
+            bottomSheet.show(parentFragmentManager, "BottomSheetAddWish")
+        }
+        binding.cell33.root.setOnClickListener {
             val bottomSheet = BottomSheetAddWish()
             bottomSheet.show(parentFragmentManager, "BottomSheetAddWish")
         }
