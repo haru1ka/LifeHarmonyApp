@@ -24,12 +24,12 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
         setupRegistrationLogic()
 
-        // ПЕРЕРАБОТАННЫЙ ПЕРЕХОД С СОХРАНЕНИЕМ
+        // Нажатие на кнопку регистрации
         binding.btnNext.setOnClickListener {
             registerNewUser()
         }
 
-        // переход на логин
+        // Переход на логин
         binding.tvAlreadyHaveAccount.setOnClickListener {
             findNavController().navigate(R.id.action_registration_to_login)
         }
@@ -40,7 +40,7 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         val email = binding.etEmail.text.toString().trim()
         val password = binding.etPassword.text.toString()
 
-        // Используем корутину для работы с БД
+        // Запускаем корутину для работы с базой данных
         viewLifecycleOwner.lifecycleScope.launch {
             val db = AppDatabase.getDatabase(requireContext())
             val user = User(name = name, email = email, password = password)
@@ -48,10 +48,15 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             val resultId = db.userDao().registerUser(user)
 
             if (resultId != -1L) {
-                // Если запись прошла успешно (id не -1)
-                findNavController().navigate(R.id.action_registration_to_verification)
+                // ВАЖНО: Кладем email в "багаж" (Bundle)
+                val bundle = Bundle().apply {
+                    putString("user_email", email)
+                }
+
+                // Передаем этот Bundle при переходе
+                findNavController().navigate(R.id.action_registration_to_verification, bundle)
             } else {
-                // Если такой email уже есть и сработал IGNORE
+                // Если почта уже занята, Room вернет -1 (т.к. стоит OnConflictStrategy.IGNORE)
                 Toast.makeText(requireContext(), "Пользователь с таким email уже существует", Toast.LENGTH_SHORT).show()
             }
         }
@@ -78,7 +83,7 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         val pass = binding.etPassword.text.toString()
         val confirm = binding.etConfirmPassword.text.toString()
 
-        // Кнопка станет активной только если все условия соблюдены
+        // Условие активности кнопки: поля не пусты и пароли совпадают
         val isValid = name.isNotEmpty() && email.isNotEmpty() && pass.isNotEmpty() && pass == confirm
 
         binding.btnNext.isEnabled = isValid
