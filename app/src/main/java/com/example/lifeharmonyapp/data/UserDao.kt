@@ -20,4 +20,8 @@ interface UserDao {
 
     @Query("UPDATE users_table SET isVerified = 1 WHERE email = :email")
     suspend fun verifyUser(email: String)
+
+    // Метод для сохранения нового пароля
+    @Query("UPDATE users_table SET password = :newPassword WHERE email = :email")
+    suspend fun updatePassword(email: String, newPassword: String)
 }
