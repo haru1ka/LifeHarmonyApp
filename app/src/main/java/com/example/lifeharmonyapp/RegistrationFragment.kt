@@ -4,9 +4,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.lifeharmonyapp.data.AppDatabase
+import com.example.lifeharmonyapp.data.User
 import com.example.lifeharmonyapp.databinding.FragmentRegistrationBinding
+import kotlinx.coroutines.launch
 
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
@@ -19,14 +24,36 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
 
         setupRegistrationLogic()
 
-        //переход на верификацию
+        // ПЕРЕРАБОТАННЫЙ ПЕРЕХОД С СОХРАНЕНИЕМ
         binding.btnNext.setOnClickListener {
-            findNavController().navigate(R.id.action_registration_to_verification)
+            registerNewUser()
         }
 
-        //переход на логин
+        // переход на логин
         binding.tvAlreadyHaveAccount.setOnClickListener {
             findNavController().navigate(R.id.action_registration_to_login)
+        }
+    }
+
+    private fun registerNewUser() {
+        val name = binding.etName.text.toString().trim()
+        val email = binding.etEmail.text.toString().trim()
+        val password = binding.etPassword.text.toString()
+
+        // Используем корутину для работы с БД
+        viewLifecycleOwner.lifecycleScope.launch {
+            val db = AppDatabase.getDatabase(requireContext())
+            val user = User(name = name, email = email, password = password)
+
+            val resultId = db.userDao().registerUser(user)
+
+            if (resultId != -1L) {
+                // Если запись прошла успешно (id не -1)
+                findNavController().navigate(R.id.action_registration_to_verification)
+            } else {
+                // Если такой email уже есть и сработал IGNORE
+                Toast.makeText(requireContext(), "Пользователь с таким email уже существует", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -51,6 +78,7 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         val pass = binding.etPassword.text.toString()
         val confirm = binding.etConfirmPassword.text.toString()
 
+        // Кнопка станет активной только если все условия соблюдены
         val isValid = name.isNotEmpty() && email.isNotEmpty() && pass.isNotEmpty() && pass == confirm
 
         binding.btnNext.isEnabled = isValid

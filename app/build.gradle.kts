@@ -47,7 +47,7 @@ dependencies {
     implementation("androidx.gridlayout:gridlayout:1.0.0")
 
     // --- НАСТРОЙКА ROOM ---
-    val roomVersion = "2.6.1"
+    val roomVersion = "2.8.4"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
