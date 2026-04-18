@@ -10,11 +10,9 @@
         android:name="com.example.lifeharmonyapp.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration">
-
         <action
             android:id="@+id/action_registration_to_verification"
             app:destination="@id/verificationFragment" />
-
         <action
             android:id="@+id/action_registration_to_login"
             app:destination="@id/loginFragment" />
@@ -44,6 +42,9 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_verificationFragment"
+            app:destination="@id/verificationFragment" />
     </fragment>
 
     <fragment
@@ -61,11 +62,11 @@
         android:name="com.example.lifeharmonyapp.ResetVereficationFragment"
         android:label="ResetVereficationFragment"
         tools:layout="@layout/fragment_reset_verification">
-
         <action
             android:id="@+id/action_resetVereficationFragment_to_newPasswordFragment"
             app:destination="@id/newPasswordFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/passwordUpdatedFragment"
         android:name="com.example.lifeharmonyapp.PasswordUpdatedFragment"
@@ -75,6 +76,7 @@
             android:id="@+id/action_passwordUpdatedFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/newPasswordFragment"
         android:name="com.example.lifeharmonyapp.NewPasswordFragment"
@@ -90,6 +92,5 @@
         android:name="com.example.lifeharmonyapp.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home"/>
-
 
 </navigation>

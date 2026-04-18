@@ -10,8 +10,11 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun registerUser(user: User): Long
 
-    // Возвращаем список. Если в списке 0 элементов — логин не удался.
-    // Это избавляет от ошибки с Continuation в Java-коде.
+    // 1. ЭТОТ МЕТОД НУЖЕН ДЛЯ LOGINFRAGMENT (поиск по почте)
+    @Query("SELECT * FROM users_table WHERE email = :email LIMIT 1")
+    suspend fun getUserByEmail(email: String): User?
+
+    // Оставляем твой метод на всякий случай, если ты захочешь зайти "в одно действие"
     @Query("SELECT * FROM users_table WHERE email = :email AND password = :password LIMIT 1")
     suspend fun loginUser(email: String, password: String): List<User>
 
