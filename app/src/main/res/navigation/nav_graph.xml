@@ -78,6 +78,14 @@
             android:id="@+id/action_newPasswordFragment_to_passwordUpdatedFragment"
             app:destination="@id/passwordUpdatedFragment" />
     </fragment>
-
-
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.lifeharmonyapp.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/editPasswordFragment"
+        android:name="com.example.lifeharmonyapp.EditPasswordFragment"
+        android:label="fragment_edit_password"
+        tools:layout="@layout/fragment_edit_password" />
 </navigation>

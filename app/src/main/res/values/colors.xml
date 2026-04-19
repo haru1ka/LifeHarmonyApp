@@ -5,4 +5,12 @@
     <color name="dark_brown">#67370C</color>
     <color name="brown">#AC7F5E</color>
     <color name="grey">#C5CECF</color>
+    <color name="white_brown">#EBDECB</color>
+    <color name="darker_brown">#E5D8C5</color>
+    <color name="soft_white">#F6F1EB</color>
+    <color name="grey_text">#ACB6B3</color>
+    <color name="brown_text">#66370D</color>
+    <color name="red">#42171B</color>
+    <color name="dark_red">#240B0E</color>
+    <color name="white_grey">#FAFAFA</color>
 </resources>
