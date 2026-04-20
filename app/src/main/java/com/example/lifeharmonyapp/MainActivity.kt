@@ -1,5 +1,6 @@
 package com.example.lifeharmonyapp
-
+import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,5 +22,5 @@ class MainActivity : AppCompatActivity() {
             insets
 
          */
-        }
     }
+}

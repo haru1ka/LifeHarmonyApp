@@ -88,4 +88,9 @@
         android:name="com.example.lifeharmonyapp.EditPasswordFragment"
         android:label="fragment_edit_password"
         tools:layout="@layout/fragment_edit_password" />
+    <fragment
+        android:id="@+id/themeSettingsFragment"
+        android:name="com.example.lifeharmonyapp.ThemeSettingsFragment"
+        android:label="fragment_color_theme"
+        tools:layout="@layout/fragment_color_theme" />
 </navigation>
