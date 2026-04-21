@@ -91,6 +91,32 @@
         android:id="@+id/homeFragment"
         android:name="com.example.lifeharmonyapp.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.lifeharmonyapp.EditProfileFragment"
+        android:label="EditProfileFragment"
+        tools:layout="@layout/fragment_edit_profile"/>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.lifeharmonyapp.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_editPasswordFragment"
+            app:destination="@id/editPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPasswordFragment"
+        android:name="com.example.lifeharmonyapp.EditPasswordFragment"
+        android:label="EditPasswordFragment"
+        tools:layout="@layout/fragment_edit_password"/>
 
 </navigation>

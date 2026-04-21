@@ -32,7 +32,7 @@
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.SmallComponent" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/tvProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"

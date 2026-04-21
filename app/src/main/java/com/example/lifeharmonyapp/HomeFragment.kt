@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.gridlayout.widget.GridLayout
+import androidx.navigation.fragment.findNavController
 import com.example.lifeharmonyapp.databinding.FragmentHomeBinding
 import com.example.lifeharmonyapp.databinding.FragmentLoginBinding
 
@@ -33,6 +34,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
         }
+        //Профиль
+        binding.tvProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        }
+        binding.ivProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        }
+
 
         // Для сетки по клику СДЕЛАТЬ ЦИКЛ!!!!!
         binding.cell13.setOnClickListener {
