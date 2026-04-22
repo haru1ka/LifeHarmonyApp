@@ -112,11 +112,19 @@
         <action
             android:id="@+id/action_profileFragment_to_editPasswordFragment"
             app:destination="@id/editPasswordFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_themeSettingsFragment"
+            app:destination="@id/themeSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editPasswordFragment"
         android:name="com.example.lifeharmonyapp.EditPasswordFragment"
         android:label="EditPasswordFragment"
         tools:layout="@layout/fragment_edit_password"/>
+    <fragment
+        android:id="@+id/themeSettingsFragment"
+        android:name="com.example.lifeharmonyapp.ThemeSettingsFragment"
+        android:label="ThemeSettingsFragment"
+        tools:layout="@layout/fragment_color_theme"/>
 
 </navigation>

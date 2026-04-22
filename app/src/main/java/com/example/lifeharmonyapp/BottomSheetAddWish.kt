@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
 
     private lateinit var imageAdapter: WishImageAdapter
     private lateinit var btnSave: View
+    private var selectedImageRes: Int? = null
     private val educationImages = listOf(R.drawable.book1, R.drawable.book2)
     private val travelImages = listOf(R.drawable.plane1, R.drawable.plane2)
 
@@ -29,27 +31,49 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
 
         // Инициализация UI элементов
         btnSave = view.findViewById(R.id.btnSaveWish)
+        val etDescription = view.findViewById<EditText>(R.id.etWishDescription)
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvImages)
         val btnClose = view.findViewById<View>(R.id.btnClose)
 
         //Настройка адаптера
         imageAdapter = WishImageAdapter(educationImages) { selectedImage ->
+            selectedImageRes = selectedImage
             btnSave.visibility = View.VISIBLE
         }
         recyclerView.adapter = imageAdapter
 
-        // 3. Обработка кликов по сферам жизни
+
         setupSphereClick(view, R.id.sphere1, educationImages)
         setupSphereClick(view, R.id.sphere2, travelImages)
 
         //Кнопки управления
         btnClose.setOnClickListener {
-            dismiss()
+            val text = etDescription.text.toString()
+            val cellId = arguments?.getString("cellId")
+
+            if (selectedImageRes != null && text.isNotEmpty()) {
+                val result = Bundle().apply {
+                    putInt("bundle_image", selectedImageRes!!)
+                    putString("bundle_text", text)
+                    putString("bundle_cell_id", cellId)
+                }
+                parentFragmentManager.setFragmentResult("wish_added", result)
+                dismiss()
+            }
         }
 
         btnSave.setOnClickListener {
-            // Здесь будет логика сохранения желания в базу данных
-            dismiss()
+            val text = etDescription.text.toString()
+
+            if (selectedImageRes != null && text.isNotEmpty()) {
+                val result = Bundle().apply {
+                    putInt("img", selectedImageRes!!) // Ключ "img"
+                    putString("txt", text)            // Ключ "txt"
+                }
+                // КЛЮЧ ДОЛЖЕН БЫТЬ "new_wish"
+                parentFragmentManager.setFragmentResult("new_wish", result)
+                dismiss()
+            }
         }
 
         // Установка начальных уровней прогресса

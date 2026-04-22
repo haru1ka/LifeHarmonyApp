@@ -50,6 +50,7 @@
         android:fontFamily="@font/zen_old_mincho_semi_bold"/>
 
     <EditText
+        android:id="@+id/etWishDescription"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="10dp"
