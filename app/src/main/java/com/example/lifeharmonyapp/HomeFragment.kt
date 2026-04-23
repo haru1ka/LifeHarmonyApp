@@ -12,29 +12,35 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    // Список всех квадратных ячеек (include) в порядке их заполнения
-    private lateinit var cells: List<ItemWishAddBinding>
+    // Карта для быстрого доступа к ячейкам по их ID
+    private lateinit var cellsMap: Map<Int, ItemWishAddBinding>
 
-    // Карта для отслеживания занятых ячеек (индекс ячейки -> занята или нет)
-    private val filledStatus = mutableMapOf<Int, Boolean>()
+    // Список ячеек для поиска "первой свободной"
+    private lateinit var cellsList: List<ItemWishAddBinding>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentHomeBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
-        // 1. Инициализируем список ячеек из твоего fragment_home.xml
-        cells = listOf(
-            binding.cell11, binding.cell12,binding.cell13,
+        // Инициализируем ячейки
+        cellsMap = mapOf(
+            R.id.cell_1_1 to binding.cell11,
+            R.id.cell_1_2 to binding.cell12,
+            R.id.cell_1_3 to binding.cell13,
+            R.id.cell_2_1 to binding.cell21,
+            R.id.cell_2_3 to binding.cell23,
+            R.id.cell_3_1 to binding.cell31,
+            R.id.cell_3_2 to binding.cell32,
+            R.id.cell_3_3 to binding.cell33
+        )
+
+        // Список в порядке заполнения (для логики круга)
+        cellsList = listOf(
+            binding.cell11, binding.cell12, binding.cell13,
             binding.cell21, binding.cell23,
             binding.cell31, binding.cell32, binding.cell33
         )
 
-        // Изначально все ячейки свободны
-        if (filledStatus.isEmpty()) {
-            cells.indices.forEach { filledStatus[it] = false }
-        }
-
-        // 2. Настраиваем сетку, чтобы она была квадратной
         binding.gridContainer.post {
             if (_binding != null) {
                 binding.gridContainer.layoutParams.height = binding.gridContainer.width
@@ -42,34 +48,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
 
-        // 3. Слушаем результат из BottomSheetAddWish (ключ "new_wish")
         parentFragmentManager.setFragmentResultListener("new_wish", viewLifecycleOwner) { _, bundle ->
             val img = bundle.getInt("img")
             val txt = bundle.getString("txt") ?: ""
+            val targetCellId = bundle.getInt("target_cell_id")
 
-            // Ищем индекс первой свободной ячейки
-            val firstEmptyIndex = cells.indices.find { filledStatus[it] == false }
-
-            firstEmptyIndex?.let { index ->
-                val cell = cells[index]
-
-                // Скрываем слой "Добавить" и показываем фото с текстом
-                cell.layoutAddState.visibility = View.GONE
-                cell.ivWishPhoto.setImageResource(img)
-                cell.ivWishPhoto.visibility = View.VISIBLE
-
-                // Если ты добавила слой затемнения viewGradient в item_wish_add.xml:
-                // cell.viewGradient.visibility = View.VISIBLE
-
-                cell.tvWishTitle.text = txt
-                cell.tvWishTitle.visibility = View.VISIBLE
-
-                // Помечаем ячейку как занятую
-                filledStatus[index] = true
+            if (targetCellId == R.id.cell_center) {
+                // ЛОГИКА ДЛЯ КРУГА: Ищем первую ячейку, где текст еще не установлен (скрыт слой AddState)
+                val firstEmptyCell = cellsList.find { it.layoutAddState.visibility == View.VISIBLE }
+                firstEmptyCell?.let { updateCellUI(it, img, txt) }
+            } else {
+                // ЛОГИКА ДЛЯ КОНКРЕТНОЙ ЯЧЕЙКИ: Обновляем по ID
+                cellsMap[targetCellId]?.let { updateCellUI(it, img, txt) }
             }
         }
 
-        // 4. Настраиваем клики
         setupClickListeners()
 
         binding.tvProfile.setOnClickListener {
@@ -77,22 +70,33 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
+    private fun updateCellUI(cell: ItemWishAddBinding, img: Int, txt: String) {
+        cell.layoutAddState.visibility = View.GONE
+        cell.ivWishPhoto.setImageResource(img)
+        cell.ivWishPhoto.visibility = View.VISIBLE
+        cell.tvWishTitle.text = txt
+        cell.tvWishTitle.visibility = View.VISIBLE
+    }
+
     private fun setupClickListeners() {
-        // Клик по центральному кругу — только открывает шторку
+        // Клик по кругу
         binding.cellCenter.setOnClickListener {
-            openBottomSheet()
+            openBottomSheet(R.id.cell_center)
         }
 
-        // Клики по остальным ячейкам — тоже открывают шторку
-        cells.forEach { cellBinding ->
+        // Клики по ячейкам
+        cellsMap.forEach { (id, cellBinding) ->
             cellBinding.root.setOnClickListener {
-                openBottomSheet()
+                openBottomSheet(id)
             }
         }
     }
 
-    private fun openBottomSheet() {
+    private fun openBottomSheet(cellId: Int) {
         val bottomSheet = BottomSheetAddWish()
+        bottomSheet.arguments = Bundle().apply {
+            putInt("cell_id", cellId)
+        }
         bottomSheet.show(parentFragmentManager, "BottomSheetAddWish")
     }
 

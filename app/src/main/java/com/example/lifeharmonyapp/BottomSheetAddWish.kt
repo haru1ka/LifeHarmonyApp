@@ -15,6 +15,8 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
     private lateinit var imageAdapter: WishImageAdapter
     private lateinit var btnSave: View
     private var selectedImageRes: Int? = null
+    private var targetCellId: Int = -1
+
     private val educationImages = listOf(R.drawable.book1, R.drawable.book2)
     private val travelImages = listOf(R.drawable.plane1, R.drawable.plane2)
 
@@ -29,63 +31,47 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Инициализация UI элементов
+        targetCellId = arguments?.getInt("cell_id") ?: -1
+
         btnSave = view.findViewById(R.id.btnSaveWish)
         val etDescription = view.findViewById<EditText>(R.id.etWishDescription)
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvImages)
         val btnClose = view.findViewById<View>(R.id.btnClose)
 
-        //Настройка адаптера
         imageAdapter = WishImageAdapter(educationImages) { selectedImage ->
             selectedImageRes = selectedImage
             btnSave.visibility = View.VISIBLE
         }
         recyclerView.adapter = imageAdapter
 
-
         setupSphereClick(view, R.id.sphere1, educationImages)
         setupSphereClick(view, R.id.sphere2, travelImages)
 
-        //Кнопки управления
-        btnClose.setOnClickListener {
-            val text = etDescription.text.toString()
-            val cellId = arguments?.getString("cellId")
-
-            if (selectedImageRes != null && text.isNotEmpty()) {
-                val result = Bundle().apply {
-                    putInt("bundle_image", selectedImageRes!!)
-                    putString("bundle_text", text)
-                    putString("bundle_cell_id", cellId)
-                }
-                parentFragmentManager.setFragmentResult("wish_added", result)
-                dismiss()
-            }
-        }
+        btnClose.setOnClickListener { dismiss() }
 
         btnSave.setOnClickListener {
             val text = etDescription.text.toString()
 
             if (selectedImageRes != null && text.isNotEmpty()) {
                 val result = Bundle().apply {
-                    putInt("img", selectedImageRes!!) // Ключ "img"
-                    putString("txt", text)            // Ключ "txt"
+                    putInt("img", selectedImageRes!!)
+                    putString("txt", text)
+                    putInt("target_cell_id", targetCellId)
                 }
-                // КЛЮЧ ДОЛЖЕН БЫТЬ "new_wish"
                 parentFragmentManager.setFragmentResult("new_wish", result)
                 dismiss()
             }
         }
 
-        // Установка начальных уровней прогресса
         setupSphereProgress(view, R.id.arcProgress1, 7500)
     }
 
     private fun setupSphereClick(root: View, sphereId: Int, images: List<Int>) {
         root.findViewById<FrameLayout>(sphereId).setOnClickListener {
             imageAdapter.updateData(images)
-            btnSave.visibility = View.GONE // Скрываем кнопку, так как в новой категории ничего не выбрано
+            btnSave.visibility = View.GONE
             resetSpheresAlpha(root)
-            it.alpha = 1.0f // Делаем активную сферу яркой
+            it.alpha = 1.0f
         }
     }
 
