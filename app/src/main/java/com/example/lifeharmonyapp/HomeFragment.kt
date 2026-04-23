@@ -56,10 +56,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             if (targetCellId == R.id.cell_center) {
                 // ЛОГИКА ДЛЯ КРУГА: Ищем первую ячейку, где текст еще не установлен (скрыт слой AddState)
                 val firstEmptyCell = cellsList.find { it.layoutAddState.visibility == View.VISIBLE }
-                firstEmptyCell?.let { updateCellUI(it, img, txt) }
+                firstEmptyCell?.let { updateCellUI(it, img, txt,bundle) }
             } else {
                 // ЛОГИКА ДЛЯ КОНКРЕТНОЙ ЯЧЕЙКИ: Обновляем по ID
-                cellsMap[targetCellId]?.let { updateCellUI(it, img, txt) }
+                cellsMap[targetCellId]?.let { updateCellUI(it, img, txt,bundle) }
             }
         }
 
@@ -70,12 +70,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun updateCellUI(cell: ItemWishAddBinding, img: Int, txt: String) {
+    private fun updateCellUI(cell: ItemWishAddBinding, img: Int, txt: String, bundle: Bundle) {
+        val customUri = bundle.getString("custom_uri")
+
         cell.layoutAddState.visibility = View.GONE
-        cell.ivWishPhoto.setImageResource(img)
-        cell.ivWishPhoto.visibility = View.VISIBLE
         cell.tvWishTitle.text = txt
         cell.tvWishTitle.visibility = View.VISIBLE
+        cell.ivWishPhoto.visibility = View.VISIBLE
+
+        if (!customUri.isNullOrEmpty()) {
+            // Если пришло фото из галереи
+            cell.ivWishPhoto.setImageURI(android.net.Uri.parse(customUri))
+        } else {
+            // Если пришла картинка из ресурсов
+            cell.ivWishPhoto.setImageResource(img)
+        }
     }
 
     private fun setupClickListeners() {

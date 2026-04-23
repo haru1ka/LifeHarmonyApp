@@ -4,19 +4,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class WishImageAdapter(
     private var images: List<Int>,
-    private val onImageSelected: (Int) -> Unit
+    private val onImageSelected: (Int) -> Unit,
+    private val onAddPhotoClicked: () -> Unit // Новый колбэк для выбора фото из галереи
 ) : RecyclerView.Adapter<WishImageAdapter.ViewHolder>() {
 
-    // Храним позицию выбранного элемента
     private var selectedPosition = RecyclerView.NO_POSITION
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.ivWishImage)
         val checkIcon: ImageView = view.findViewById(R.id.ivChecked)
+        val tvLabel: TextView = view.findViewById(R.id.tvPhotoLabel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,38 +27,44 @@ class WishImageAdapter(
         return ViewHolder(view)
     }
 
-    // Тот самый метод, на который ругается компилятор.
-    // Убедись, что он в файле только один!
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val imageRes = images[position]
-        holder.imageView.setImageResource(imageRes)
-
-        // Логика отображения галочки
-        if (selectedPosition == position) {
-            holder.checkIcon.visibility = View.VISIBLE
-        } else {
+        if (position == 0) {
+            // ПЕРВАЯ ЯЧЕЙКА: Кнопка "Своё фото"
+            holder.imageView.setImageResource(R.drawable.ic_camera) // Убедись, что иконка ic_camera есть в drawable
+            holder.tvLabel.visibility = View.VISIBLE
             holder.checkIcon.visibility = View.GONE
-        }
 
-        // Обработка клика
-        holder.itemView.setOnClickListener {
-            val previousPosition = selectedPosition
-            selectedPosition = holder.adapterPosition
+            holder.itemView.setOnClickListener {
+                onAddPhotoClicked()
+            }
+        } else {
+            // ОСТАЛЬНЫЕ ЯЧЕЙКИ: Стандартные картинки (индекс минус 1)
+            val imageRes = images[position - 1]
+            holder.imageView.setImageResource(imageRes)
+            holder.tvLabel.visibility = View.GONE
 
-            // Перерисовываем предыдущий выбранный элемент и новый
-            notifyItemChanged(previousPosition)
-            notifyItemChanged(selectedPosition)
+            holder.checkIcon.visibility = if (selectedPosition == position) View.VISIBLE else View.GONE
 
-            // Вызываем колбэк, чтобы показать кнопку "Сохранить" во фрагменте
-            onImageSelected(imageRes)
+            holder.itemView.setOnClickListener {
+                val previousPosition = selectedPosition
+                selectedPosition = holder.adapterPosition
+                notifyItemChanged(previousPosition)
+                notifyItemChanged(selectedPosition)
+                onImageSelected(imageRes)
+            }
         }
     }
 
-    override fun getItemCount(): Int = images.size
+    override fun getItemCount(): Int = images.size + 1
 
     fun updateData(newImages: List<Int>) {
         this.images = newImages
-        this.selectedPosition = RecyclerView.NO_POSITION // Сбрасываем выбор при смене категории
+        this.selectedPosition = RecyclerView.NO_POSITION
+        notifyDataSetChanged()
+    }
+
+    fun resetSelection() {
+        this.selectedPosition = RecyclerView.NO_POSITION
         notifyDataSetChanged()
     }
 }

@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.ImageView
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -15,17 +16,19 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
     private lateinit var imageAdapter: WishImageAdapter
     private lateinit var btnSave: View
     private var selectedImageRes: Int? = null
+    private var customImageUri: String? = null // Переменная для хранения пути к фото
     private var targetCellId: Int = -1
 
+    // Твои ресурсы (оставь свои полные списки здесь)
     private val educationImages = listOf(R.drawable.education1, R.drawable.education2,R.drawable.education2,
         R.drawable.education3,R.drawable.education4,R.drawable.education5,R.drawable.education6,R.drawable.education7,
         R.drawable.education8,R.drawable.education9,R.drawable.education10,R.drawable.education11)
     private val travelImages = listOf(R.drawable.travel1, R.drawable.travel2,R.drawable.travel3,R.drawable.travel4,
-            R.drawable.travel5,R.drawable.travel6,R.drawable.travel7,R.drawable.travel8,R.drawable.travel9,R.drawable.travel10,
-            R.drawable.travel11)
+        R.drawable.travel5,R.drawable.travel6,R.drawable.travel7,R.drawable.travel8,R.drawable.travel9,R.drawable.travel10,
+        R.drawable.travel11)
 
     private val spiritualityImages = listOf(R.drawable.spirituality1,R.drawable.spirituality2,R.drawable.spirituality3,
-            R.drawable.spirituality4,R.drawable.spirituality5,R.drawable.spirituality6,R.drawable.spirituality7,
+        R.drawable.spirituality4,R.drawable.spirituality5,R.drawable.spirituality6,R.drawable.spirituality7,
         R.drawable.spirituality8,R.drawable.spirituality9,R.drawable.spirituality10,R.drawable.spirituality11)
 
     private val careerImages = listOf(R.drawable.career1,R.drawable.career2,R.drawable.career3,
@@ -40,30 +43,43 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
         R.drawable.health5,R.drawable.health6,R.drawable.health7,R.drawable.health8,R.drawable.health9,
         R.drawable.health10,R.drawable.health11)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    // Инициализация выбора из галереи
+    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            customImageUri = uri.toString()
+            selectedImageRes = null // Выбор системной картинки сбрасываем
+            imageAdapter.resetSelection()
+            btnSave.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.bottom_sheet_add_wish, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         targetCellId = arguments?.getInt("cell_id") ?: -1
 
         btnSave = view.findViewById(R.id.btnSaveWish)
         val etDescription = view.findViewById<EditText>(R.id.etWishDescription)
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvImages)
-        val btnClose = view.findViewById<View>(R.id.btnClose)
 
-        imageAdapter = WishImageAdapter(educationImages) { selectedImage ->
-            selectedImageRes = selectedImage
-            btnSave.visibility = View.VISIBLE
-        }
+        imageAdapter = WishImageAdapter(
+            educationImages,
+            onImageSelected = { res ->
+                selectedImageRes = res
+                customImageUri = null // Если выбрали из списка, сбрасываем галерею
+                btnSave.visibility = View.VISIBLE
+            },
+            onAddPhotoClicked = {
+                // Открываем галерею
+                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }
+        )
         recyclerView.adapter = imageAdapter
 
+        // Твои сферы (настрой остальные по аналогии)
         setupSphereClick(view, R.id.sphere1, educationImages)
         setupSphereClick(view, R.id.sphere2, travelImages)
         setupSphereClick(view, R.id.sphere3, spiritualityImages)
@@ -72,14 +88,14 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
         setupSphereClick(view, R.id.sphere6, healthImages)
 
 
-        btnClose.setOnClickListener { dismiss() }
+        view.findViewById<View>(R.id.btnClose).setOnClickListener { dismiss() }
 
         btnSave.setOnClickListener {
             val text = etDescription.text.toString()
-
-            if (selectedImageRes != null && text.isNotEmpty()) {
+            if ((selectedImageRes != null || customImageUri != null) && text.isNotEmpty()) {
                 val result = Bundle().apply {
-                    putInt("img", selectedImageRes!!)
+                    putInt("img", selectedImageRes ?: 0)
+                    putString("custom_uri", customImageUri) // Передаем путь к фото
                     putString("txt", text)
                     putInt("target_cell_id", targetCellId)
                 }
@@ -87,34 +103,21 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
                 dismiss()
             }
         }
-
-        setupSphereProgress(view, R.id.arcProgress1, 7500)
     }
 
     private fun setupSphereClick(root: View, sphereId: Int, images: List<Int>) {
         val sphere = root.findViewById<FrameLayout>(sphereId)
-        root.findViewById<FrameLayout>(sphereId).setOnClickListener {
+        sphere.setOnClickListener {
             imageAdapter.updateData(images)
+            customImageUri = null
             btnSave.visibility = View.GONE
             resetSpheresAlpha(root)
             sphere.setBackgroundResource(R.drawable.shape_sphere_selected)
-            sphere.alpha = 1.0f
-            it.alpha = 1.0f
         }
     }
 
     private fun resetSpheresAlpha(root: View) {
         val ids = listOf(R.id.sphere1, R.id.sphere2, R.id.sphere3, R.id.sphere4, R.id.sphere5, R.id.sphere6)
-        ids.forEach { id ->
-            val view = root.findViewById<View>(id)
-            // Убираем фон (делаем прозрачным) и возвращаем прозрачность 0.5
-            view?.background = null
-
-        }
-    }
-
-    private fun setupSphereProgress(rootView: View, arcId: Int, progressLevel: Int) {
-        val arc = rootView.findViewById<ImageView>(arcId)
-        arc?.setImageLevel(progressLevel)
+        ids.forEach { id -> root.findViewById<View>(id)?.background = null }
     }
 }
