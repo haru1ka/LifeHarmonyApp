@@ -19,6 +19,8 @@ class WishImageAdapter(
         val imageView: ImageView = view.findViewById(R.id.ivWishImage)
         val checkIcon: ImageView = view.findViewById(R.id.ivChecked)
         val tvLabel: TextView = view.findViewById(R.id.tvPhotoLabel)
+
+        val ivCamera: ImageView = view.findViewById(R.id.ivCamera)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,9 +32,10 @@ class WishImageAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (position == 0) {
             // ПЕРВАЯ ЯЧЕЙКА: Кнопка "Своё фото"
-            holder.imageView.setImageResource(R.drawable.ic_camera) // Убедись, что иконка ic_camera есть в drawable
-            holder.tvLabel.visibility = View.VISIBLE
+            holder.imageView.setImageDrawable(null)
+            holder.ivCamera.visibility = View.VISIBLE
             holder.checkIcon.visibility = View.GONE
+            holder.tvLabel.visibility = View.VISIBLE
 
             holder.itemView.setOnClickListener {
                 onAddPhotoClicked()
@@ -41,6 +44,7 @@ class WishImageAdapter(
             // ОСТАЛЬНЫЕ ЯЧЕЙКИ: Стандартные картинки (индекс минус 1)
             val imageRes = images[position - 1]
             holder.imageView.setImageResource(imageRes)
+            holder.ivCamera.visibility = View.GONE
             holder.tvLabel.visibility = View.GONE
 
             holder.checkIcon.visibility = if (selectedPosition == position) View.VISIBLE else View.GONE
