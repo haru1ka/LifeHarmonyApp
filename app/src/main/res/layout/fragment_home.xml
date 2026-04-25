@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="70dp"
+            android:layout_marginHorizontal="15dp">
+
+            <!-- Профиль -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_avatar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.SmallComponent" />
+
+            <TextView
+                android:id="@+id/tvProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/carlito_regular"
+                android:text="Профиль >"
+                android:textColor="@color/brown"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
+                app:layout_constraintStart_toEndOf="@+id/ivProfile"
+                app:layout_constraintTop_toTopOf="@+id/ivProfile" />
+
+            <!-- Заголовок -->
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/zen_old_mincho_black"
+                android:text="ГЛАВНАЯ"
+                android:textColor="@color/dark_brown"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="20dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/ic_chart"
+                app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_mission"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+            <!-- Колесо баланса -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardWheel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                app:cardBackgroundColor="@color/beige"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView7"
+                app:strokeColor="@android:color/transparent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="20dp">
+
+                    <ImageView
+                        android:layout_width="240dp"
+                        android:layout_height="240dp"
+                        android:src="@drawable/ic_wheel_placeholder" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="КОЛЕСО БАЛАНСА"
+                        android:fontFamily="@font/zen_old_mincho_semi_bold"
+                        android:textColor="#4F4043"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- "С чего начать путь трансформаций" -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView"
+                android:layout_width="match_parent"
+                android:layout_height="77dp"
+                android:layout_marginTop="15dp"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardWheel"
+                app:strokeColor="#AC7F5E"
+                app:strokeWidth="2dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="30dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_transformation" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|bottom"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="11dp"
+                        android:fontFamily="@font/zen_old_mincho_semi_bold"
+                        android:text="С ЧЕГО НАЧАТЬ ПУТЬ ТРАНСФОРМАЦИЙ?"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="end|top"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_camera" />
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Челлендж месяца + Что в подписке -->
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/challange"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="11dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#E2D2BD"
+                    app:cardCornerRadius="15dp"
+                    app:strokeColor="#AC7F5E"
+                    app:strokeWidth="2dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitEnd"
+                            android:layout_gravity="end"
+                            android:src="@drawable/img_challenge_month" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|bottom"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginBottom="11dp"
+                            android:fontFamily="@font/zen_old_mincho_semi_bold"
+                            android:text="ЧЕЛЛЕНДЖ\nМЕСЯЦА"
+                            android:textColor="#67370C"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="end|top"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/ic_paper" />
+                    </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#E2D2BD"
+                    app:cardCornerRadius="15dp"
+                    app:strokeColor="#AC7F5E"
+                    app:strokeWidth="2dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|bottom"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginBottom="11dp"
+                            android:fontFamily="@font/zen_old_mincho_semi_bold"
+                            android:text="ЧТО В ПОДПИСКЕ?"
+                            android:textColor="#67370C"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="end|top"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/ic_folder" />
+                    </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Афиша программ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/poster"
+                android:layout_width="match_parent"
+                android:layout_height="176dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+                app:strokeColor="#AC7F5E"
+                app:strokeWidth="2dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingTop="90dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_poster" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|bottom"
+                        android:layout_marginBottom="11dp"
+                        android:fontFamily="@font/zen_old_mincho_semi_bold"
+                        android:text="АФИША ПРОГРАММ 2026 ГОДА"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="end|top"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_folder" />
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- КАРТА ЖЕЛАНИЙ-->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardWishMap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:cardBackgroundColor="@color/brown"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/poster"
+                app:strokeColor="#AC7F5E"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingBottom="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/zen_old_mincho_semi_bold"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="МОЯ\nКАРТА ЖЕЛАНИЙ"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/carlito_regular"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="Лучший 2026 год"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <!-- Сетка 3x3 -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/gridContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@android:color/transparent">
+
+                        <!-- Ячейка 1,1 -->
+                        <include
+                            android:id="@+id/cell_1_1"
+                            layout="@layout/item_wish_add"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="15dp"
+                            app:layout_constraintStart_toEndOf="@id/cell_3_2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cell_2_3"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/cell_1_2"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/cell_2_1"
+                            app:layout_constraintHorizontal_chainStyle="spread_inside"
+                            app:layout_constraintVertical_chainStyle="spread_inside"
+                            />
+
+
+                        <!-- Ячейка 1,2 -->
+                        <include
+                            android:id="@+id/cell_1_2"
+                            layout="@layout/item_wish_add"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="15dp"
+                            app:layout_constraintStart_toEndOf="@id/cell_1_1"
+                            app:layout_constraintEnd_toStartOf="@id/cell_1_3"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/cell_center"
+                            />
+
+                        <include
+                            android:id="@+id/cell_1_3"
+                            layout="@layout/item_wish_add"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="15dp"
+                            app:layout_constraintStart_toEndOf="@id/cell_1_2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/cell_2_3"
+                            />
+
+                        <!-- Ячейка 1,3
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cell_1_3"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="15dp"
+                            app:cardBackgroundColor="#E2D2BD"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="2dp"
+                            app:strokeColor="#AC7F5E"
+                            app:strokeWidth="1.5dp"
+                            app:layout_constraintStart_toEndOf="@id/cell_1_2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/cell_2_3">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                >
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_add"
+                                    android:layout_gravity="center" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Добавить"
+                                    android:layout_marginTop="10dp"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/white"
+                                    android:fontFamily="@font/carlito_regular"/>
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView> -->
+
+                        <!-- Ячейка 2,1 -->
+                        <include
+                            android:id="@+id/cell_2_1"
+                            layout="@layout/item_wish_add"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="15dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/cell_center"
+                            app:layout_constraintTop_toBottomOf="@id/cell_1_1"
+                            app:layout_constraintBottom_toTopOf="@id/cell_3_1"
+                            />
+
+                        <!-- Центральная ячейка -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cell_center"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="15dp"
+                            app:cardBackgroundColor="#E2D2BD"
+                            app:cardCornerRadius="500dp"
+                            app:cardElevation="4dp"
+                            app:strokeColor="#AC7F5E"
+                            app:strokeWidth="2dp"
+                            app:layout_constraintStart_toEndOf="@id/cell_2_1"
+                            app:layout_constraintEnd_toStartOf="@id/cell_2_3"
+                            app:layout_constraintTop_toBottomOf="@id/cell_1_2"
+                            app:layout_constraintBottom_toTopOf="@id/cell_3_2">
+                            
+                            <ImageView
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:src="@drawable/ic_camera_wish"
+                                android:layout_gravity="center"/>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Ячейка 2,3 -->
+                        <include
+                            android:id="@+id/cell_2_3"
+                            layout="@layout/item_wish_add"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="15dp"
+                            app:layout_constraintStart_toEndOf="@id/cell_center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cell_1_3"
+                            app:layout_constraintBottom_toTopOf="@id/cell_3_3"
+                            />
+
+
+                        <!-- Ячейка 3,1 -->
+                        <include
+                            android:id="@+id/cell_3_1"
+                            layout="@layout/item_wish_add"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="15dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/cell_3_2"
+                            app:layout_constraintTop_toBottomOf="@id/cell_2_1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                        <!-- Ячейка 3,2 -->
+                        <include
+                            android:id="@+id/cell_3_2"
+                            layout="@layout/item_wish_add"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="15dp"
+                            app:layout_constraintStart_toEndOf="@id/cell_3_1"
+                            app:layout_constraintEnd_toStartOf="@id/cell_3_3"
+                            app:layout_constraintTop_toBottomOf="@id/cell_center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                        <!-- Ячейка 3,3 -->
+                        <include
+                            android:id="@+id/cell_3_3"
+                            layout="@layout/item_wish_add"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintStart_toEndOf="@id/cell_3_2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cell_2_3"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

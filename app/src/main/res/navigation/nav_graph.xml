@@ -10,11 +10,9 @@
         android:name="com.example.lifeharmonyapp.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration">
-
         <action
             android:id="@+id/action_registration_to_verification"
             app:destination="@id/verificationFragment" />
-
         <action
             android:id="@+id/action_registration_to_login"
             app:destination="@id/loginFragment" />
@@ -38,6 +36,15 @@
         <action
             android:id="@+id/action_loginFragment_to_passwordRecoveryFragment"
             app:destination="@id/passwordRecoveryFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_verificationFragment"
+            app:destination="@id/verificationFragment" />
     </fragment>
 
     <fragment
@@ -55,11 +62,11 @@
         android:name="com.example.lifeharmonyapp.ResetVereficationFragment"
         android:label="ResetVereficationFragment"
         tools:layout="@layout/fragment_reset_verification">
-
         <action
             android:id="@+id/action_resetVereficationFragment_to_newPasswordFragment"
             app:destination="@id/newPasswordFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/passwordUpdatedFragment"
         android:name="com.example.lifeharmonyapp.PasswordUpdatedFragment"
@@ -69,6 +76,7 @@
             android:id="@+id/action_passwordUpdatedFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/newPasswordFragment"
         android:name="com.example.lifeharmonyapp.NewPasswordFragment"
@@ -78,19 +86,45 @@
             android:id="@+id/action_newPasswordFragment_to_passwordUpdatedFragment"
             app:destination="@id/passwordUpdatedFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.lifeharmonyapp.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.lifeharmonyapp.EditProfileFragment"
-        android:label="fragment_edit_profile"
-        tools:layout="@layout/fragment_edit_profile" />
+        android:label="EditProfileFragment"
+        tools:layout="@layout/fragment_edit_profile"/>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.lifeharmonyapp.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_editPasswordFragment"
+            app:destination="@id/editPasswordFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_themeSettingsFragment"
+            app:destination="@id/themeSettingsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/editPasswordFragment"
         android:name="com.example.lifeharmonyapp.EditPasswordFragment"
-        android:label="fragment_edit_password"
-        tools:layout="@layout/fragment_edit_password" />
+        android:label="EditPasswordFragment"
+        tools:layout="@layout/fragment_edit_password"/>
     <fragment
         android:id="@+id/themeSettingsFragment"
         android:name="com.example.lifeharmonyapp.ThemeSettingsFragment"
-        android:label="fragment_color_theme"
-        tools:layout="@layout/fragment_color_theme" />
+        android:label="ThemeSettingsFragment"
+        tools:layout="@layout/fragment_color_theme"/>
+
 </navigation>

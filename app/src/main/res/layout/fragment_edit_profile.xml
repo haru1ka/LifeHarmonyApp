@@ -5,17 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/soft_white">
+    android:background="@color/beige">
+
     <ImageView
         android:id="@+id/btnBack"
-        android:layout_width="43dp"
-        android:layout_height="45dp"
+        android:layout_width="11dp"
+        android:layout_height="20dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="60dp"
-        android:src="@drawable/ic_arrow_back"
         android:contentDescription="Назад"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/tvTitle" />
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -60,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/carlito_regular"
                 android:text="Имя"
-                android:textColor="@color/grey_text"
+                android:textColor="@color/light_grey"
                 android:textSize="14sp" />
 
             <EditText
@@ -70,7 +71,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/underline_edit_text"
                 android:fontFamily="@font/zen_old_mincho_regular"
-                android:textColor="@color/brown_text"
+                android:textColor="@color/dark_brown2"
                 android:textSize="20sp"
                 android:inputType="text" />
 
@@ -80,7 +81,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/carlito_regular"
                 android:text="Ник в приложении"
-                android:textColor="@color/grey_text"
+                android:textColor="@color/light_grey"
                 android:textSize="14sp" />
 
             <EditText
@@ -90,7 +91,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/underline_edit_text"
                 android:fontFamily="@font/zen_old_mincho_regular"
-                android:textColor="@color/brown_text"
+                android:textColor="@color/dark_brown2"
                 android:textSize="20sp" />
 
             <TextView
@@ -99,7 +100,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/carlito_regular"
                 android:text="E-mail"
-                android:textColor="@color/grey_text"
+                android:textColor="@color/light_grey"
                 android:textSize="14sp" />
 
             <EditText
@@ -110,7 +111,7 @@
                 android:inputType="textEmailAddress"
                 android:background="@drawable/underline_edit_text"
                 android:fontFamily="@font/zen_old_mincho_regular"
-                android:textColor="@color/brown_text"
+                android:textColor="@color/dark_brown2"
                 android:textSize="20sp" />
 
             <TextView
@@ -119,7 +120,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/carlito_regular"
                 android:text="Дата рождения"
-                android:textColor="@color/grey_text"
+                android:textColor="@color/light_grey"
                 android:textSize="14sp" />
 
             <EditText
@@ -130,7 +131,7 @@
                 android:inputType="date"
                 android:background="@drawable/underline_edit_text"
                 android:fontFamily="@font/zen_old_mincho_regular"
-                android:textColor="@color/brown_text"
+                android:textColor="@color/dark_brown2"
                 android:textSize="20sp" />
 
             <TextView
@@ -139,7 +140,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/carlito_regular"
                 android:text="Страна"
-                android:textColor="@color/grey_text"
+                android:textColor="@color/light_grey"
                 android:textSize="14sp" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -158,7 +159,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:spinnerMode="dropdown"
-                    android:textColor="@color/brown_text"/>
+                    android:textColor="@color/dark_brown2"/>
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"

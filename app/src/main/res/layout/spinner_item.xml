@@ -7,6 +7,6 @@
     android:layout_height="wrap_content"
     android:fontFamily="@font/zen_old_mincho_regular"
     android:padding="10dp"
-    android:textColor="@color/brown_text"
+    android:textColor="@color/brown"
     android:textSize="20sp"
     android:singleLine="true" />
