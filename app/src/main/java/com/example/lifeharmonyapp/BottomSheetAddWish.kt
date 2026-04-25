@@ -15,11 +15,12 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
 
     private lateinit var imageAdapter: WishImageAdapter
     private lateinit var btnSave: View
+    private lateinit var etDescription: EditText
     private var selectedImageRes: Int? = null
-    private var customImageUri: String? = null // Переменная для хранения пути к фото
+    private var customImageUri: String? = null
     private var targetCellId: Int = -1
 
-    // Твои ресурсы (оставь свои полные списки здесь)
+    // Ваши списки ресурсов
     private val educationImages = listOf(R.drawable.education1, R.drawable.education2,R.drawable.education2,
         R.drawable.education3,R.drawable.education4,R.drawable.education5,R.drawable.education6,R.drawable.education7,
         R.drawable.education8,R.drawable.education9,R.drawable.education10,R.drawable.education11)
@@ -43,12 +44,11 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
         R.drawable.health5,R.drawable.health6,R.drawable.health7,R.drawable.health8,R.drawable.health9,
         R.drawable.health10,R.drawable.health11)
 
-    // Инициализация выбора из галереи
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
             customImageUri = uri.toString()
-            selectedImageRes = null // Выбор системной картинки сбрасываем
-            imageAdapter.resetSelection()
+            selectedImageRes = null
+            imageAdapter.setCustomImage(customImageUri!!)
             btnSave.visibility = View.VISIBLE
         }
     }
@@ -59,27 +59,27 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         targetCellId = arguments?.getInt("cell_id") ?: -1
-
         btnSave = view.findViewById(R.id.btnSaveWish)
-        val etDescription = view.findViewById<EditText>(R.id.etWishDescription)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.rvImages)
+        etDescription = view.findViewById(R.id.etWishDescription)
+        val rvImages = view.findViewById<RecyclerView>(R.id.rvImages)
 
+        // Инициализируем адаптер (начальный список можно оставить пустым или первой сферы)
         imageAdapter = WishImageAdapter(
-            educationImages,
+            emptyList(),
             onImageSelected = { res ->
                 selectedImageRes = res
-                customImageUri = null // Если выбрали из списка, сбрасываем галерею
+                customImageUri = null
                 btnSave.visibility = View.VISIBLE
             },
             onAddPhotoClicked = {
-                // Открываем галерею
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
         )
-        recyclerView.adapter = imageAdapter
+        rvImages.adapter = imageAdapter
 
-        // Твои сферы (настрой остальные по аналогии)
+        // Настраиваем клики
         setupSphereClick(view, R.id.sphere1, educationImages)
         setupSphereClick(view, R.id.sphere2, travelImages)
         setupSphereClick(view, R.id.sphere3, spiritualityImages)
@@ -90,12 +90,15 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
 
         view.findViewById<View>(R.id.btnClose).setOnClickListener { dismiss() }
 
+        // АВТОМАТИЧЕСКИЙ КЛИК ПО ПЕРВОЙ СФЕРЕ ПРИ ОТКРЫТИИ
+        view.findViewById<FrameLayout>(R.id.sphere1).performClick()
+
         btnSave.setOnClickListener {
             val text = etDescription.text.toString()
             if ((selectedImageRes != null || customImageUri != null) && text.isNotEmpty()) {
                 val result = Bundle().apply {
                     putInt("img", selectedImageRes ?: 0)
-                    putString("custom_uri", customImageUri) // Передаем путь к фото
+                    putString("custom_uri", customImageUri)
                     putString("txt", text)
                     putInt("target_cell_id", targetCellId)
                 }
@@ -110,6 +113,7 @@ class BottomSheetAddWish : BottomSheetDialogFragment() {
         sphere.setOnClickListener {
             imageAdapter.updateData(images)
             customImageUri = null
+            imageAdapter.resetCustomImage()
             btnSave.visibility = View.GONE
             resetSpheresAlpha(root)
             sphere.setBackgroundResource(R.drawable.shape_sphere_selected)
