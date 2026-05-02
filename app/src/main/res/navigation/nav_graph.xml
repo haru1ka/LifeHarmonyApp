@@ -126,5 +126,19 @@
         android:name="com.example.lifeharmonyapp.ThemeSettingsFragment"
         android:label="ThemeSettingsFragment"
         tools:layout="@layout/fragment_color_theme"/>
+    <dialog
+        android:id="@+id/bottomSheetChallenge"
+        android:name="com.example.lifeharmonyapp.data.BottomSheetChallenge"
+        android:label="BottomSheetChallenge"
+        tools:layout="@layout/bottom_sheet_challenge">
+        <action
+            android:id="@+id/action_bottomSheetChallenge_to_challengeProgressFragment"
+            app:destination="@id/challengeProgressFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/challengeProgressFragment"
+        android:name="com.example.lifeharmonyapp.data.ChallengeProgressFragment"
+        android:label="ChallengeProgressFragment"
+        tools:layout="@layout/fragment_challenge_progress"/><action android:id="@+id/action_global_bottomSheetChallenge" app:destination="@id/bottomSheetChallenge"/><action android:id="@+id/action_global_bottomSheetChallenge2" app:destination="@id/bottomSheetChallenge"/><action android:id="@+id/action_global_challengeProgressFragment" app:destination="@id/challengeProgressFragment"/>
 
 </navigation>

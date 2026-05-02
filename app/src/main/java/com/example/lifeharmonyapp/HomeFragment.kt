@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.lifeharmonyapp.data.BottomSheetChallenge
 import com.example.lifeharmonyapp.databinding.FragmentHomeBinding
 import com.example.lifeharmonyapp.databinding.ItemWishAddBinding
 
@@ -67,6 +68,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.tvProfile.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        }
+
+        binding.challange.setOnClickListener {
+            BottomSheetChallenge().show(parentFragmentManager, "ChallengeBottomSheet")
         }
     }
 
