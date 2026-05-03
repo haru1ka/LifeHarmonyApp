@@ -1,5 +1,6 @@
 package com.example.lifeharmonyapp
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -45,19 +46,28 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             val db = AppDatabase.getDatabase(requireContext())
             val user = User(name = name, email = email, password = password)
 
+            // Room возвращает ID новой строки. Если email занят, вернет -1.
             val resultId = db.userDao().registerUser(user)
 
             if (resultId != -1L) {
-                // ВАЖНО: Кладем email в "багаж" (Bundle)
+                // СОХРАНЕНИЕ СЕССИИ:
+                // Записываем ID пользователя в SharedPreferences, чтобы профиль мог подтянуть данные.
+                val sharedPref = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+                sharedPref.edit().putInt("current_user_id", resultId.toInt()).apply()
+
+                // Кладем email в Bundle для экрана верификации
                 val bundle = Bundle().apply {
                     putString("user_email", email)
                 }
 
-                // Передаем этот Bundle при переходе
+                // Переход на следующий экран
                 findNavController().navigate(R.id.action_registration_to_verification, bundle)
             } else {
-                // Если почта уже занята, Room вернет -1 (т.к. стоит OnConflictStrategy.IGNORE)
-                Toast.makeText(requireContext(), "Пользователь с таким email уже существует", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Пользователь с таким email уже существует",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

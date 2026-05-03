@@ -16,6 +16,18 @@ data class User(
     val name: String,
     val email: String,
     val password: String,
+
     // Используем Int (0 или 1), так как SQLite хранит Boolean как целые числа
-    val isVerified: Int = 0
+    val isVerified: Int = 0,
+
+    // --- НОВЫЕ ПОЛЯ ДАННЫХ ---
+
+    // Никнейм пользователя
+    val nickname: String? = null,
+
+    // Дата рождения (храним строкой для простоты, например "01.01.2000")
+    val birthDate: String? = null,
+
+    // Страна проживания
+    val country: String? = null
 )

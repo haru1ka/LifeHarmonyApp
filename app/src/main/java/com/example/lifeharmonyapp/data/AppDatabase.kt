@@ -5,27 +5,31 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-// Указываем, какие таблицы (entities) входят в базу и версию базы.
-@Database(entities = [User::class], version = 1, exportSchema = false)
+// 1. УВЕЛИЧИЛИ ВЕРСИЮ: Была 1, стала 2, так как мы добавили новые поля в User.kt
+@Database(entities = [User::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     // Метод, через который мы будем получать доступ к командам (DAO)
     abstract fun userDao(): UserDao
 
     companion object {
-        // @Volatile гарантирует, что значение переменной INSTANCE всегда актуально для всех потоков
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
-        // Функция получения базы. Если она уже создана — вернет её, если нет — создаст.
+        // Функция получения базы.
         fun getDatabase(context: Context): AppDatabase {
-            // synchronized защищает от одновременного создания базы из двух разных мест
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "life_harmony_db" // Имя файла самой базы данных
-                ).build()
+                    "life_harmony_db" // Имя файла базы данных
+                )
+                    // 2. ДОБАВИЛИ МИГРАЦИЮ:
+                    // Это позволит Room очистить старую таблицу и создать новую при запуске,
+                    // чтобы не было конфликтов из-за новых колонок.
+                    .fallbackToDestructiveMigration()
+                    .build()
+
                 INSTANCE = instance
                 instance
             }
